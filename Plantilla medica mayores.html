@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha de Asistencia y Emergencia</title>
+    <style>
+        body { font-family: 'Segoe UI', Roboto, sans-serif; background-color: #f0f2f5; margin: 0; padding: 10px; }
+        .card { max-width: 480px; margin: auto; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); overflow: hidden; }
+        
+    /* CABECERA MULTIGÉNERO Y CERCANA */
+        .header { 
+            background-image: url('https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&q=80&w=800'); 
+            background-size: cover; background-position: center; height: 250px; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            position: relative; color: white; text-align: center;
+        }
+        .header::after { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(30, 60, 90, 0.45); z-index: 1; }
+        
+        .photo-container { width: 130px; height: 130px; border: 4px solid white; border-radius: 50%; overflow: hidden; z-index: 2; cursor: pointer; background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .photo-container img { width: 100%; height: 100%; object-fit: cover; }
+        #file-input { display: none; }
+
+        .user-identity { z-index: 2; margin-top: 10px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+        .name { font-size: 24px; font-weight: 800; text-transform: uppercase; margin: 0; }
+        .age-row { font-size: 16px; margin-top: 5px; font-weight: bold; }
+
+        .alerts-row { display: grid; grid-template-columns: 1fr 1fr; background: #2b547e; color: white; padding: 12px; text-align: center; }
+        .alert-item { border-right: 1px solid rgba(255,255,255,0.2); }
+        .alert-item:last-child { border-right: none; }
+        .alert-label { font-size: 11px; font-weight: bold; text-transform: uppercase; }
+        .alert-value { font-size: 16px; font-weight: 900; }
+
+        .content { padding: 20px; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; margin-top: 15px; }
+        .section-title { font-weight: bold; color: #2b2d42; font-size: 13px; text-transform: uppercase; }
+        
+        .data-box { background: #f8f9fa; padding: 12px; border-radius: 12px; margin-bottom: 10px; border: 1px solid #dee2e6; position: relative; }
+        .contact-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+        
+        .btn-call { background: #28a745; color: white; padding: 8px 12px; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: bold; white-space: nowrap; }
+        .btn-add { background: #004080; color: white; border: none; border-radius: 50px; padding: 6px 12px; font-size: 11px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .btn-delete { background: #d90429; color: white; border: none; border-radius: 5px; padding: 4px 8px; font-size: 10px; cursor: pointer; margin-top: 8px; opacity: 0.6; }
+        .btn-delete:hover { opacity: 1; }
+
+        .btn-location { width: 100%; background: #004080; color: white; padding: 12px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .btn-pdf { width: 100%; background: #2b2d42; color: white; padding: 12px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+
+        .footer-legal { font-size: 9px; color: #8d99ae; text-align: center; padding: 15px; line-height: 1.4; }
+        
+        [contenteditable="true"] { border-bottom: 1px dashed #bbb; outline: none; padding: 1px 3px; }
+        select { background: white; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; padding: 2px; }
+
+        @media print {
+            .btn-pdf, .btn-location, .btn-call, .btn-add, .btn-delete, #file-input { display: none; }
+            .card { box-shadow: none; border: 1px solid #ddd; }
+            body { background: white; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="header">
+        <div class="photo-container" onclick="document.getElementById('file-input').click();">
+            <img id="preview" src="https://via.placeholder.com/150?text=SUBIR+FOTO" alt="Foto">
+            <input type="file" id="file-input" accept="image/*" onchange="previewImage(event)">
+        </div>
+        <div class="user-identity">
+            <div class="name" contenteditable="true">NOMBRE Y APELLIDOS</div>
+            <div class="age-row">Edad: <span contenteditable="true">__</span> años</div>
+        </div>
+    </div>
+
+    <div class="alerts-row">
+        <div class="alert-item">
+            <div class="alert-label">Alergias</div>
+            <div class="alert-value" contenteditable="true">NINGUNA</div>
+        </div>
+        <div class="alert-item">
+            <div class="alert-label">Sangre</div>
+            <div class="alert-value" contenteditable="true">O+</div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="data-box">
+            <div style="margin-bottom: 5px;">
+                <strong>Situación Habitual:</strong> 
+                <select>
+                    <option>Vive solo/a</option>
+                    <option>Vive acompañado/a</option>
+                    <option>Residencia / Centro</option>
+                </select>
+            </div>
+            <div>
+                <strong>Nº Seguridad Social:</strong> <span contenteditable="true">00 / 00000000 / 00</span>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <span class="section-title">📞 Familiares / Cuidadores</span>
+            <button class="btn-add" onclick="addContact()">+ AÑADIR OTRO</button>
+        </div>
+        
+        <div id="contact-list">
+            <div class="data-box">
+                <div class="contact-row">
+                    <div><strong contenteditable="true">Hijo/a - Nombre</strong><br><span contenteditable="true">600 000 000</span></div>
+                    <a href="tel:000000000" class="btn-call">LLAMAR ✅</a>
+                </div>
+                <button class="btn-delete" onclick="this.parentElement.remove()">Eliminar</button>
+            </div>
+            <div class="data-box">
+                <div class="contact-row">
+                    <div><strong contenteditable="true">Cuidador/a - Nombre</strong><br><span contenteditable="true">600 000 000</span></div>
+                    <a href="tel:000000000" class="btn-call">LLAMAR ✅</a>
+                </div>
+                <button class="btn-delete" onclick="this.parentElement.remove()">Eliminar</button>
+            </div>
+        </div>
+
+        <div class="section-title">🏥 Información Médica</div>
+        <div class="data-box">
+            <strong style="font-size: 11px; color: #d90429;">PATOLOGÍAS / ENFERMEDADES:</strong>
+            <div contenteditable="true" style="font-size: 13px; margin-top: 4px; color: #444;">Ej: Tensión alta, Diabetes...</div>
+        </div>
+        <div class="data-box">
+            <strong style="font-size: 11px; color: #004080;">MEDICACIÓN DIARIA:</strong>
+            <div contenteditable="true" style="font-size: 13px; margin-top: 4px; color: #444;">Indicar medicamentos...</div>
+        </div>
+        <div class="data-box">
+            <strong style="font-size: 11px; color: #555;">OBSERVACIONES / HISTORIAL:</strong>
+            <div contenteditable="true" style="font-size: 13px; margin-top: 4px; color: #444;">Ej: Movilidad reducida, audífono...</div>
+        </div>
+
+        <button class="btn-location" onclick="shareLocation()">📍 ENVIAR MI UBICACIÓN</button>
+        <button class="btn-pdf" onclick="window.print()">💾 GUARDAR PDF</button>
+    </div>
+
+    <div class="footer-legal">
+        AVISO LEGAL: Esta ficha es responsabilidad exclusiva del usuario/tutor. El fabricante NFC no valida la información médica. La responsabilidad de la privacidad recae sobre el comprador. Emergencias: 112.
+    </div>
+</div>
+
+<script>
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function(){ document.getElementById('preview').src = reader.result; };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+    function addContact() {
+        const list = document.getElementById('contact-list');
+        const container = document.createElement('div');
+        container.className = 'data-box';
+        container.innerHTML = `
+            <div class="contact-row">
+                <div><strong contenteditable="true">Parentesco - Nombre</strong><br><span contenteditable="true">600 000 000</span></div>
+                <a href="tel:000000000" class="btn-call">LLAMAR ✅</a>
+            </div>
+            <button class="btn-delete" onclick="this.parentElement.remove()">Eliminar</button>
+        `;
+        list.appendChild(container);
+    }
+
+    function shareLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                const url = `https://www.google.com/maps?q=${position.coords.latitude},${position.coords.longitude}`;
+                window.open(`https://wa.me/?text=Necesito ayuda. Mi ubicación actual es: ${url}`, '_blank');
+            }, function() { alert("Active el GPS."); });
+        }
+    }
+</script>
+
+</body>
+</html>
