@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ficha Médica Deportiva PRO</title>
+
+<style>
+* { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+body{
+font-family:'Segoe UI',Roboto,sans-serif;
+background:#f0f2f5;
+margin:0;
+padding:10px;
+}
+
+.card{
+max-width:480px;
+margin:auto;
+background:white;
+border-radius:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.15);
+overflow:hidden;
+}
+
+.header{
+background-image:url('https://i.postimg.cc/WzhjMCTL/Gemini-Generated-Image-diwf5hdiwf5hdiwf.png') !important;
+background-size:cover !important;
+background-position:center !important;
+height:260px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+position:relative;
+color:white !important;
+text-align:center;
+}
+
+.header::after{
+content:"";
+position:absolute;
+top:0;
+left:0;
+right:0;
+bottom:0;
+background:rgba(0,0,0,0.45);
+z-index:1;
+}
+
+.photo-container{
+width:140px;
+height:140px;
+border:4px solid white;
+border-radius:50%;
+overflow:hidden;
+z-index:2;
+cursor:pointer;
+background:#fff;
+box-shadow:0 5px 15px rgba(0,0,0,0.4);
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.photo-container img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+#file-input{display:none}
+
+.user-identity{
+z-index:2;
+margin-top:10px;
+text-shadow:0 2px 4px rgba(0,0,0,0.8);
+}
+
+.name{
+font-size:24px;
+font-weight:800;
+text-transform:uppercase;
+margin:0;
+}
+
+.age-row{
+font-size:16px;
+margin-top:5px;
+font-weight:bold;
+}
+
+.age-val { display: inline-block; min-width: 25px; border-bottom: 1px dashed white; }
+
+.alerts-row{
+display:grid;
+grid-template-columns:1fr 1fr;
+background:#d90429 !important;
+color:white !important;
+padding:12px;
+text-align:center;
+}
+
+.alert-item{ border-right:1px solid rgba(255,255,255,0.2); }
+.alert-item:last-child{ border-right:none; }
+.alert-label{ font-size:11px; font-weight:bold; text-transform:uppercase; }
+
+.blood-select {
+    background: transparent;
+    color: white;
+    border: none;
+    font-size: 18px;
+    font-weight: 900;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+}
+.blood-select option { color: black; }
+
+.content{ padding:20px; }
+.section-title{ font-weight:bold; color:#2b2d42; font-size:13px; text-transform:uppercase; margin-bottom:8px; margin-top:15px; }
+
+.data-box{
+background:#f8f9fa !important;
+padding:12px;
+border-radius:12px;
+margin-bottom:10px;
+border:1px solid #dee2e6;
+}
+
+.contact-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+
+.btn-call{
+background:#28a745;
+color:white;
+padding:8px 12px;
+border-radius:8px;
+text-decoration:none;
+font-size:12px;
+font-weight:bold;
+white-space:nowrap;
+cursor:pointer;
+}
+
+.btn-location{
+width:100%;
+background:#004080;
+color:white;
+padding:12px;
+border:none;
+border-radius:10px;
+font-weight:bold;
+cursor:pointer;
+margin-top:10px;
+}
+
+.btn-html {
+width: 100%;
+background: #28a745 !important;
+color: white !important;
+padding: 12px;
+border: none;
+border-radius: 10px;
+font-weight: bold;
+cursor: pointer;
+margin-top: 10px;
+}
+
+.btn-pdf{
+width:100%;
+background:#2b2d42;
+color:white;
+padding:12px;
+border:none;
+border-radius:10px;
+font-weight:bold;
+cursor:pointer;
+margin-top:10px;
+}
+
+.footer-legal{ font-size:9px; color:#8d99ae; text-align:center; padding:15px; line-height:1.4; }
+
+[contenteditable="true"]{ border-bottom: 1px dashed #bbb; outline:none; }
+
+@media print{
+.btn-pdf, .btn-location, .btn-call, .btn-html, #file-input { display:none !important; }
+.card{ box-shadow:none; border:1px solid #ddd; }
+body{ background:white; padding:0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<div class="header">
+<div class="photo-container" onclick="document.getElementById('file-input').click();">
+<img id="preview" src="https://via.placeholder.com/150?text=FOTO">
+<input type="file" id="file-input" accept="image/*" onchange="previewImage(event)">
+</div>
+
+<div class="user-identity">
+<div class="name" contenteditable="true">NOMBRE Y APELLIDOS</div>
+<div class="age-row">Edad: <span class="age-val" contenteditable="true"></span> años</div>
+</div>
+</div>
+
+<div class="alerts-row">
+<div class="alert-item">
+<div class="alert-label">Alergias</div>
+<div class="alert-value" contenteditable="true" style="font-size:16px; font-weight:900;">NINGUNA</div>
+</div>
+<div class="alert-item">
+<div class="alert-label">Sangre</div>
+<div class="alert-value">
+    <select class="blood-select">
+        <option value="O+">O+</option>
+        <option value="O-">O-</option>
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
+    </select>
+</div>
+</div>
+</div>
+
+<div class="content">
+
+<div class="data-box">
+<div style="margin-bottom:5px">
+<strong>Disciplina:</strong>
+<select>
+<option>Corredor de montaña</option>
+<option>Runner</option>
+<option>Ciclista carretera</option>
+<option>BTT</option>
+</select>
+</div>
+<div><strong>Nº Federado:</strong> <span contenteditable="true"></span></div>
+</div>
+
+<div class="section-title">📞 Contactos de Emergencia (ICE)</div>
+<div class="data-box contact-row">
+<div><strong contenteditable="true">Nombre ICE1</strong><br><span contenteditable="true" id="tel1">600000000</span></div>
+<a class="btn-call" onclick="callNumber('tel1')">LLAMAR</a>
+</div>
+
+<div class="data-box contact-row">
+<div><strong contenteditable="true">Nombre ICE2</strong><br><span contenteditable="true" id="tel2">600000000</span></div>
+<a class="btn-call" onclick="callNumber('tel2')">LLAMAR</a>
+</div>
+
+<div class="section-title">🏥 Información Médica</div>
+<div class="data-box">
+<strong style="font-size:11px;color:#d90429;">PATOLOGÍAS</strong>
+<div contenteditable="true" style="font-size:13px;margin-top:4px">Escribir aquí...</div>
+</div>
+
+<div class="data-box">
+<strong style="font-size:11px;color:#004080;">MEDICACIÓN</strong>
+<div contenteditable="true" style="font-size:13px;margin-top:4px">Escribir aquí...</div>
+</div>
+
+<div class="data-box">
+<strong style="font-size:11px;color:#555;">OBSERVACIONES</strong>
+<div contenteditable="true" style="font-size:13px;margin-top:4px">Escribir aquí...</div>
+</div>
+
+<button class="btn-location" onclick="shareLocation()">📍 COMPARTIR MI UBICACIÓN</button>
+<button class="btn-html" onclick="descargarFichaHTML()">💾 GUARDAR FICHA VIVA (.html)</button>
+<button class="btn-pdf" onclick="window.print()">💾 GENERAR PDF</button>
+
+</div>
+
+<div class="footer-legal">
+AVISO LEGAL: Esta ficha es responsabilidad exclusiva del usuario. El fabricante NFC no valida la información médica.
+</div>
+</div>
+
+<script>
+function previewImage(event){
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e){
+        const imgElement = document.getElementById('preview');
+        imgElement.src = e.target.result;
+        imgElement.style.transform = "none";
+    }
+    reader.readAsDataURL(file);
+}
+
+function callNumber(id){
+    const num=document.getElementById(id).innerText.replace(/\s+/g,'');
+    window.location.href="tel:"+num;
+}
+
+function shareLocation(){
+    if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(function(position){
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            const url=`https://www.google.com/maps?q=${lat},${lon}`;
+            window.open(`https://wa.me/?text=Mi%20ubicación%20de%20emergencia:%20${url}`,'_blank');
+        }, function(){ alert("Active el GPS."); });
+    }
+}
+
+function descargarFichaHTML() {
+    const selects = document.querySelectorAll('select');
+    selects.forEach(s => {
+        for (let option of s.options) {
+            if (option.selected) { option.setAttribute('selected', 'selected'); }
+            else { option.removeAttribute('selected'); }
+        }
+    });
+
+    const botones = document.querySelectorAll('.btn-html, .btn-pdf, .btn-location, #file-input');
+    botones.forEach(b => b.style.display = 'none');
+    
+    const editables = document.querySelectorAll('[contenteditable="true"]');
+    editables.forEach(e => e.style.borderBottom = 'none');
+
+    const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'MI_FICHA_SOS.html';
+    a.click();
+
+    botones.forEach(b => b.style.display = '');
+    editables.forEach(e => e.style.borderBottom = '');
+}
+</script>
+
+</body>
+</html>
