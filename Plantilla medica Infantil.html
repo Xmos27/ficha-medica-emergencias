@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ficha Médica Infantil SOS</title>
+
+<style>
+/* FORZAR COLOR EN PDF E IMPRESIÓN */
+* { 
+    -webkit-print-color-adjust: exact !important; 
+    print-color-adjust: exact !important; 
+}
+
+body{
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
+background:#f2f2f2;
+margin:0;
+padding:12px;
+}
+
+.card{
+max-width:520px;
+margin:auto;
+background:white;
+border-radius:18px;
+box-shadow:0 12px 30px rgba(0,0,0,0.15);
+overflow:hidden;
+}
+
+/* CABECERA INFANTIL */
+.header{
+position:relative;
+text-align:center;
+padding:30px 20px;
+background:linear-gradient(135deg,#a0e4ff,#fddcf5) !important;
+}
+
+.header::before{
+content:"";
+position:absolute;
+top:0; left:0; right:0; bottom:0;
+background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><circle cx="20" cy="20" r="6" fill="%23ffd700"/><circle cx="60" cy="60" r="4" fill="%23ff69b4"/><circle cx="80" cy="30" r="5" fill="%23ff4500"/></svg>');
+background-repeat: repeat;
+opacity:0.2;
+z-index:0;
+}
+
+.photo{
+    width:180px;     
+    height:180px;   
+    border-radius:50%;
+    overflow:hidden;
+    margin:auto;
+    cursor:pointer;
+    position:relative;
+    z-index:1;
+    border:5px solid #fff;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.15), 0 6px 14px rgba(0,0,0,0.25);
+    transition: transform 0.2s;
+    background: #fff;
+}
+
+.photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.photo:after{
+    content:"Tocar para foto";
+    position:absolute;
+    bottom:0; left:0; right:0;
+    font-size:11px;
+    background:rgba(0,0,0,0.5);
+    color:white;
+    padding:2px 0;
+}
+
+/* MENÚ TIPO PIXEL */
+.photo-menu {
+    display: none;
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    z-index: 1000;
+    width: 280px;
+    text-align: center;
+}
+
+.photo-menu button {
+    width: 100%;
+    padding: 15px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.btn-camera { background: #007BFF; color: white; }
+.btn-gallery { background: #f0f0f0; color: #333; }
+.btn-cancel { background: transparent; color: #ff0000; }
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+}
+
+#nombre{
+margin:15px 0 5px;
+font-size:28px;
+position:relative;
+z-index:1;
+text-transform: uppercase;
+}
+
+.age {
+    font-size:18px;
+    color:#000;
+    position:relative;
+    z-index:1;
+}
+
+.age span.editable {
+    border-bottom:1px dashed #666;
+    min-width: 30px;
+    display: inline-block;
+}
+
+/* ALERTAS ROJAS */
+.alerts{
+background:#FF0000 !important;
+color:white !important;
+padding:20px;
+border-radius:0;
+position:relative;
+z-index:1;
+}
+
+.alert{ margin-bottom:12px; text-align: center; }
+.label{ font-size:12px; font-weight: bold; text-transform: uppercase; opacity: 0.9; }
+.value{ font-size:22px; font-weight:bold; }
+
+/* SELECTOR SANGRE */
+.blood-select {
+    background: transparent;
+    color: white;
+    border: none;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+    text-align: center;
+}
+.blood-select option { color: black; }
+
+.section{
+padding:20px;
+border-top:1px solid #eee;
+}
+
+.section h2{ margin-top:0; font-size:16px; color: #555; text-transform: uppercase; }
+
+.contact{
+background:#f8f9fa;
+padding:15px;
+border-radius:12px;
+margin-bottom:10px;
+border: 1px solid #eee;
+}
+
+.callbtn{
+margin-top:10px;
+display:block;
+background:#28a745;
+color:white;
+padding:12px;
+border-radius:10px;
+text-align:center;
+text-decoration:none;
+font-weight:bold;
+cursor: pointer;
+}
+
+/* BOTONES FINALES */
+.actions{ padding: 10px 20px 30px; }
+
+.btn-main{
+width:100%;
+padding:14px;
+border:none;
+border-radius:12px;
+font-size:16px;
+font-weight: bold;
+margin-top:10px;
+cursor:pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 8px;
+}
+
+.location{ background:#007BFF; color:white; }
+.viva{ background:#28a745; color:white; }
+.print{ background:#dc3545; color:white; }
+
+[contenteditable]{ outline:none; border-bottom: 1px dashed #ccc; }
+
+@media print{
+.actions, .photo-menu, .overlay, .callbtn, .photo:after { display:none !important; }
+[contenteditable] { border: none !important; }
+.card { box-shadow: none; border: 1px solid #ddd; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay" id="overlay" onclick="cerrarMenu()"></div>
+<div class="photo-menu" id="photoMenu">
+    <h3>Foto del niño/a</h3>
+    <button class="btn-camera" onclick="document.getElementById('photoInputCamera').click()">📸 HACER SELFIE</button>
+    <button class="btn-gallery" onclick="document.getElementById('photoInputGallery').click()">🖼️ GALERÍA</button>
+    <button class="btn-cancel" onclick="cerrarMenu()">CANCELAR</button>
+</div>
+
+<div class="card">
+    <div class="header">
+        <div class="photo" onclick="mostrarMenu()">
+            <img id="profileImage" src="https://via.placeholder.com/200?text=FOTO">
+        </div>
+        
+        <input type="file" id="photoInputGallery" accept="image/*" style="display:none" onchange="previewImage(event)">
+        <input type="file" id="photoInputCamera" accept="image/*" capture="user" style="display:none" onchange="previewImage(event)">
+
+        <h1 contenteditable="true" id="nombre">Nombre Apellidos</h1>
+        <div class="age">Edad: <span contenteditable="true" class="editable" id="edad"></span> años</div>
+    </div>
+
+    <div class="alerts">
+        <div class="alert">
+            <div class="label">ALERGIAS / INTOLERANCIAS</div>
+            <div class="value" contenteditable="true" id="alergias">Ninguna</div>
+        </div>
+
+        <div class="alert">
+            <div class="label">GRUPO SANGUÍNEO</div>
+            <div class="value">
+                <select class="blood-select" id="sangre">
+                    <option value="O+">O+</option><option value="O-">O-</option>
+                    <option value="A+">A+</option><option value="A-">A-</option>
+                    <option value="B+">B+</option><option value="B-">B-</option>
+                    <option value="AB+">AB+</option><option value="AB-">AB-</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>📞 PADRES / TUTORES (ICE)</h2>
+        <div class="contact">
+            <div contenteditable="true" id="ice1nombre" style="font-weight:bold">Nombre contacto 1</div>
+            <div contenteditable="true" id="ice1tel" style="color:#666">600000000</div>
+            <a class="callbtn" onclick="callNumber('ice1tel')">LLAMAR AHORA</a>
+        </div>
+        <div class="contact">
+            <div contenteditable="true" id="ice2nombre" style="font-weight:bold">Nombre contacto 2</div>
+            <div contenteditable="true" id="ice2tel" style="color:#666">600000000</div>
+            <a class="callbtn" onclick="callNumber('ice2tel')">LLAMAR AHORA</a>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🏥 INFORMACIÓN MÉDICA</h2>
+        <div class="contact">
+            <div class="label" style="color:#dc3545">PATOLOGÍAS:</div>
+            <div contenteditable="true" id="pat1" style="margin-top:5px">Escribir aquí...</div>
+        </div>
+        <div class="contact">
+            <div class="label" style="color:#007BFF">MEDICACIÓN:</div>
+            <div contenteditable="true" id="med1" style="margin-top:5px">Escribir aquí...</div>
+        </div>
+    </div>
+
+    <div class="actions">
+        <button class="btn-main location" onclick="sendLocation()">📍 COMPARTIR UBICACIÓN</button>
+        <button class="btn-main viva" onclick="descargarFichaHTML()">💾 GUARDAR FICHA VIVA (.html)</button>
+        <button class="btn-main print" onclick="window.print()">💾 GUARDAR PDF</button>
+    </div>
+</div>
+
+<script>
+// FUNCIONES DE FOTO
+function mostrarMenu() {
+    document.getElementById('overlay').style.display = 'block';
+    document.getElementById('photoMenu').style.display = 'block';
+}
+
+function cerrarMenu() {
+    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('photoMenu').style.display = 'none';
+}
+
+function previewImage(event){
+    const file = event.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e){
+        document.getElementById('profileImage').src = e.target.result;
+        cerrarMenu();
+    };
+    reader.readAsDataURL(file);
+}
+
+// LLAMADAS
+function callNumber(id){
+    let tel = document.getElementById(id).innerText.replace(/\s+/g,'');
+    window.location.href="tel:"+tel;
+}
+
+// UBICACIÓN
+function sendLocation(){
+    if(!navigator.geolocation){ alert("GPS no disponible"); return; }
+    navigator.geolocation.getCurrentPosition(pos=>{
+        let lat=pos.coords.latitude;
+        let lon=pos.coords.longitude;
+        let url=`https://www.google.com/maps?q=${lat},${lon}`;
+        window.open(`https://wa.me/?text=He encontrado a tu hijo/a. Su ubicación es: ${url}`,'_blank');
+    }, () => alert("Active el GPS"));
+}
+
+// GUARDAR HTML VIVO
+function descargarFichaHTML() {
+    // Fijar el select de sangre
+    const sangreSelect = document.getElementById('sangre');
+    for (let opt of sangreSelect.options) {
+        if (opt.selected) opt.setAttribute('selected', 'selected');
+        else opt.removeAttribute('selected');
+    }
+
+    // Ocultar botones para descarga limpia
+    const uiElements = document.querySelectorAll('.actions, .overlay, .photo-menu, .photo:after');
+    uiElements.forEach(el => el.style.display = 'none');
+    
+    // Quitar bordes dashed
+    const editables = document.querySelectorAll('[contenteditable]');
+    editables.forEach(el => el.style.borderBottom = 'none');
+
+    const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'FICHA_SOS_INFANTIL.html';
+    a.click();
+
+    // Restaurar
+    uiElements.forEach(el => el.style.display = '');
+    editables.forEach(el => el.style.borderBottom = '');
+}
+</script>
+
+</body>
+</html>
