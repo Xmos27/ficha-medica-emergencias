@@ -363,8 +363,19 @@ function previewImage(event){
 }
 
 
-/* GUARDAR PARA DRIVE (Incrusta foto y fija datos) */
 function descargarFichaHTML() {
+
+    /* ACTUALIZAR TELEFONOS PARA QUE FUNCIONEN DESDE DRIVE/NFC */
+    document.querySelectorAll('.phone-link').forEach(link => {
+        const numero = link.innerText.trim().replace(/\s+/g,'');
+        link.setAttribute("href", "tel:" + numero);
+    });
+
+    document.querySelectorAll('.btn-call').forEach(btn => {
+        const numero = btn.parentElement.querySelector('.phone-link').innerText.trim().replace(/\s+/g,'');
+        btn.setAttribute("href", "tel:" + numero);
+    });
+
     const selects = document.querySelectorAll('select');
     selects.forEach(s => {
         const val = s.value;
@@ -392,6 +403,7 @@ function descargarFichaHTML() {
 
     setTimeout(() => location.reload(), 500);
 }
+
 </script>
 </body>
 </html>
