@@ -6,7 +6,6 @@
 <title>Ficha Médica Deportiva PRO</title>
 
 <style>
-/* FORZAR COLOR EN PDF E IMPRESIÓN */
 * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 
 body{
@@ -16,7 +15,6 @@ margin:0;
 padding:10px;
 }
 
-/* TARJETA */
 .card{
 max-width:480px;
 margin:auto;
@@ -26,381 +24,165 @@ box-shadow:0 10px 30px rgba(0,0,0,0.15);
 overflow:hidden;
 }
 
-/* CABECERA */
 .header{
-background-image:url('https://i.postimg.cc/WzhjMCTL/Gemini-Generated-Image-diwf5hdiwf5hdiwf.png') !important;
-background-size:cover !important;
-background-position:center !important;
+background-image:url('https://i.postimg.cc/WzhjMCTL/Gemini-Generated-Image-diwf5hdiwf5hdiwf.png');
+background-size:cover;
+background-position:center;
 height:260px;
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
 position:relative;
-color:white !important;
+color:white;
 text-align:center;
 }
 
 .header::after{
 content:"";
 position:absolute;
-top:0;
-left:0;
-right:0;
-bottom:0;
+inset:0;
 background:rgba(0,0,0,0.45);
 z-index:1;
 }
 
-/* FOTO */
 .photo-container{
-width:140px;
-height:140px;
-border:4px solid white;
-border-radius:50%;
-overflow:hidden;
-z-index:2;
-cursor:pointer;
-background:#fff;
+width:140px;height:140px;border:4px solid white;border-radius:50%;
+overflow:hidden;z-index:2;cursor:pointer;background:#fff;
 box-shadow:0 5px 15px rgba(0,0,0,0.4);
-display: flex;
-align-items: center;
-justify-content: center;
+display:flex;align-items:center;justify-content:center;
 }
 
-.photo-container img{
-width:100%;
-height:100%;
-object-fit:cover;
-}
+.photo-container img{width:100%;height:100%;object-fit:cover;}
 
-/* MENÚ TIPO PIXEL */
-.overlay {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.5);
-    z-index: 999;
-}
+.user-identity{z-index:2;margin-top:10px;text-shadow:0 2px 4px rgba(0,0,0,0.8);}
+.name{font-size:24px;font-weight:800;text-transform:uppercase;margin:0;}
+.age-row{font-size:16px;margin-top:5px;font-weight:bold;}
 
-.photo-menu {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-    z-index: 1000;
-    width: 280px;
-    text-align: center;
-}
-
-.photo-menu button {
-    width: 100%;
-    padding: 15px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 12px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 15px;
-}
-
-.btn-camera { background: #004080; color: white; }
-.btn-gallery { background: #f0f2f5; color: #333; }
-.btn-cancel { background: transparent; color: #d90429; }
-
-#file-input-gallery, #file-input-camera { display: none; }
-
-/* IDENTIDAD */
-.user-identity{
-z-index:2;
-margin-top:10px;
-text-shadow:0 2px 4px rgba(0,0,0,0.8);
-}
-
-.name{
-font-size:24px;
-font-weight:800;
-text-transform:uppercase;
-margin:0;
-}
-
-.age-row{
-font-size:16px;
-margin-top:5px;
-font-weight:bold;
-}
-
-.age-val { display: inline-block; min-width: 25px; border-bottom: 1px dashed white; }
-
-/* ALERTAS */
 .alerts-row{
-display:grid;
-grid-template-columns:1fr 1fr;
-background:#d90429 !important;
-color:white !important;
-padding:12px;
-text-align:center;
+display:grid;grid-template-columns:1fr 1fr;
+background:#d90429;color:white;padding:12px;text-align:center;
 }
 
-.alert-item{ border-right:1px solid rgba(255,255,255,0.2); }
-.alert-item:last-child{ border-right:none; }
-.alert-label{ font-size:11px; font-weight:bold; text-transform:uppercase; }
+.content{padding:20px;}
+.section-title{font-weight:bold;color:#2b2d42;font-size:13px;margin:15px 0 8px;}
+.data-box{background:#f8f9fa;padding:12px;border-radius:12px;margin-bottom:10px;border:1px solid #dee2e6;}
+.contact-row{display:flex;align-items:center;justify-content:space-between;gap:10px;}
 
-.blood-select {
-    background: transparent;
-    color: white;
-    border: none;
-    font-size: 18px;
-    font-weight: 900;
-    text-align: center;
-    outline: none;
-    cursor: pointer;
-}
-.blood-select option { color: black; }
-
-/* CONTENIDO */
-.content{ padding:20px; }
-.section-title{ font-weight:bold; color:#2b2d42; font-size:13px; text-transform:uppercase; margin-bottom:8px; margin-top:15px; }
-
-/* BLOQUES */
-.data-box{
-background:#f8f9fa !important;
-padding:12px;
-border-radius:12px;
-margin-bottom:10px;
-border:1px solid #dee2e6;
-}
-
-.contact-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
-
-/* BOTONES */
 .btn-call{
-background:#28a745;
-color:white;
-padding:8px 12px;
-border-radius:8px;
-text-decoration:none;
-font-size:12px;
-font-weight:bold;
-white-space:nowrap;
-cursor:pointer;
+background:#28a745;color:white;padding:8px 12px;border-radius:8px;
+text-decoration:none;font-size:12px;font-weight:bold;cursor:pointer;
 }
 
-.btn-location{
-width:100%;
-background:#004080;
-color:white;
-padding:12px;
-border:none;
-border-radius:10px;
-font-weight:bold;
-cursor:pointer;
-margin-top:10px;
+.btn-location,.btn-html,.btn-pdf{
+width:100%;color:white;padding:12px;border:none;border-radius:10px;
+font-weight:bold;cursor:pointer;margin-top:10px;
 }
+.btn-location{background:#004080;}
+.btn-html{background:#28a745;}
+.btn-pdf{background:#2b2d42;}
 
-.btn-html {
-width: 100%;
-background: #28a745 !important;
-color: white !important;
-padding: 12px;
-border: none;
-border-radius: 10px;
-font-weight: bold;
-cursor: pointer;
-margin-top: 10px;
-}
+[contenteditable="true"]{border-bottom:1px dashed #bbb;outline:none;}
 
-.btn-pdf{
-width:100%;
-background:#2b2d42;
-color:white;
-padding:12px;
-border:none;
-border-radius:10px;
-font-weight:bold;
-cursor:pointer;
-margin-top:10px;
-}
-
-.footer-legal{
-font-size:9px;
-color:#8d99ae;
-text-align:center;
-padding:15px;
-line-height:1.4;
-}
-
-[contenteditable="true"]{ border-bottom: 1px dashed #bbb; outline:none; }
-
-/* IMPRESIÓN */
 @media print{
-.btn-pdf, .btn-location, .btn-call, .btn-html, .overlay, .photo-menu, #file-input-gallery, #file-input-camera {
-display:none !important;
-}
-.card{ box-shadow:none; border:1px solid #ddd; }
-body{ background:white; padding:0; }
+.btn-pdf,.btn-location,.btn-call,.btn-html{display:none !important;}
 }
 </style>
 </head>
 
 <body>
 
-<div class="overlay" id="overlay" onclick="cerrarMenu()"></div>
-<div class="photo-menu" id="photoMenu">
-    <h3>Foto de perfil</h3>
-    <button class="btn-camera" onclick="document.getElementById('file-input-camera').click()">📸 HACER SELFIE</button>
-    <button class="btn-gallery" onclick="document.getElementById('file-input-gallery').click()">🖼️ GALERÍA</button>
-    <button class="btn-cancel" onclick="cerrarMenu()">CANCELAR</button>
-</div>
-
 <div class="card">
 <div class="header">
-<div class="photo-container" onclick="mostrarMenu()">
+<div class="photo-container">
 <img id="preview" src="https://via.placeholder.com/150?text=FOTO">
 </div>
-<input type="file" id="file-input-gallery" accept="image/*" onchange="previewImage(event)">
-<input type="file" id="file-input-camera" accept="image/*" capture="user" onchange="previewImage(event)">
 
 <div class="user-identity">
 <div class="name" contenteditable="true">NOMBRE Y APELLIDOS</div>
-<div class="age-row">Edad: <span class="age-val" contenteditable="true"></span> años</div>
+<div class="age-row">Edad: <span contenteditable="true"></span> años</div>
 </div>
 </div>
 
 <div class="alerts-row">
-<div class="alert-item">
-<div class="alert-label">Alergias</div>
-<div class="alert-value" contenteditable="true">NINGUNA</div>
-</div>
-<div class="alert-item">
-<div class="alert-label">Sangre</div>
-<div class="alert-value">
-    <select class="blood-select" id="sangre">
-        <option>O+</option><option>O-</option><option>A+</option><option>A-</option>
-        <option>B+</option><option>B-</option><option>AB+</option><option>AB-</option>
-    </select>
-</div>
+<div>Alergias<br><span contenteditable="true">NINGUNA</span></div>
+<div>Sangre<br>
+<select id="sangre">
+<option>O+</option><option>O-</option><option>A+</option><option>A-</option>
+<option>B+</option><option>B-</option><option>AB+</option><option>AB-</option>
+</select>
 </div>
 </div>
 
 <div class="content">
-<div class="data-box">
-<div style="margin-bottom:5px">
-<strong>Disciplina:</strong>
-<select id="disciplina">
-<option>Corredor de montaña</option><option>Runner</option><option>Ciclista carretera</option><option>BTT</option>
-</select>
-</div>
-<div><strong>Nº Federado:</strong> <span contenteditable="true"></span></div>
-</div>
 
 <div class="section-title">📞 Contactos de Emergencia (ICE)</div>
+
 <div class="data-box contact-row">
-<div><strong contenteditable="true">Nombre ICE1</strong><br><span contenteditable="true" id="tel1">600000000</span></div>
-<a class="btn-call" onclick="callNumber('tel1')">LLAMAR</a>
+<div>
+<strong contenteditable="true">Nombre ICE1</strong><br>
+<span contenteditable="true" id="tel1">600000000</span>
 </div>
+<a class="btn-call" id="btnCall1">LLAMAR</a>
+</div>
+
 <div class="data-box contact-row">
-<div><strong contenteditable="true">Nombre ICE2</strong><br><span contenteditable="true" id="tel2">600000000</span></div>
-<a class="btn-call" onclick="callNumber('tel2')">LLAMAR</a>
+<div>
+<strong contenteditable="true">Nombre ICE2</strong><br>
+<span contenteditable="true" id="tel2">600000000</span>
+</div>
+<a class="btn-call" id="btnCall2">LLAMAR</a>
 </div>
 
 <div class="section-title">🏥 Información Médica</div>
-<div class="data-box">
-<strong style="font-size:11px;color:#d90429;">PATOLOGÍAS</strong>
-<div contenteditable="true" style="font-size:13px;margin-top:4px">Escribir aquí...</div>
-</div>
-<div class="data-box">
-<strong style="font-size:11px;color:#004080;">MEDICACIÓN</strong>
-<div contenteditable="true" style="font-size:13px;margin-top:4px">Escribir aquí...</div>
-</div>
-<div class="data-box">
-<strong style="font-size:11px;color:#555;">OBSERVACIONES</strong>
-<div contenteditable="true" style="font-size:13px;margin-top:4px">Escribir aquí...</div>
-</div>
+<div class="data-box"><strong>PATOLOGÍAS</strong><div contenteditable="true">Escribir aquí...</div></div>
+<div class="data-box"><strong>MEDICACIÓN</strong><div contenteditable="true">Escribir aquí...</div></div>
+<div class="data-box"><strong>OBSERVACIONES</strong><div contenteditable="true">Escribir aquí...</div></div>
 
-<button class="btn-location" onclick="shareLocation()">📍 COMPARTIR MI UBICACIÓN</button>
 <button class="btn-html" onclick="descargarFichaHTML()">💾 GUARDAR FICHA PARA DRIVE</button>
 <button class="btn-pdf" onclick="window.print()">💾 GENERAR PDF</button>
 
 </div>
-
-<div class="footer-legal">AVISO LEGAL: Esta ficha es responsabilidad exclusiva del usuario.</div>
 </div>
 
 <script>
-/* FOTO */
-function mostrarMenu() {
-    document.getElementById('overlay').style.display = 'block';
-    document.getElementById('photoMenu').style.display = 'block';
-}
-function cerrarMenu() {
-    document.getElementById('overlay').style.display = 'none';
-    document.getElementById('photoMenu').style.display = 'none';
-}
-function previewImage(event){
-    const file = event.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = function(e){
-        document.getElementById('preview').src = e.target.result;
-        cerrarMenu();
-    }
-    reader.readAsDataURL(file);
-}
-
-/* LLAMAR */
-function callNumber(id){
-    const num = document.getElementById(id).innerText.trim().replace(/\s+/g,'');
-    // Salta el bloqueo de iframes de Google Drive
-    window.top.location.href = "tel:" + num;
-}
-
-/* UBICACION */
-function shareLocation(){
-    if(navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(function(position){
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-            const url=`http://googleusercontent.com/maps.google.com/q=${lat},${lon}`;
-            window.open(`https://wa.me/?text=Emergencia%20deportiva.%20Mi%20ubicación:%20${url}`,'_blank');
-        }, function(){ alert("Active el GPS."); });
-    }
-}
-
-/* GUARDAR PARA DRIVE (Incrusta foto y fija datos) */
 function descargarFichaHTML() {
-    const selects = document.querySelectorAll('select');
-    selects.forEach(s => {
-        const val = s.value;
-        for (let opt of s.options) {
-            if (opt.value === val) opt.setAttribute('selected', 'selected');
-            else opt.removeAttribute('selected');
-        }
-    });
 
-    const ui = document.querySelectorAll('.btn-html, .btn-pdf, .btn-location, .overlay, .photo-menu, #file-input-gallery, #file-input-camera');
-    ui.forEach(el => el.style.display = 'none');
-    
-    const editables = document.querySelectorAll('[contenteditable="true"]');
-    editables.forEach(el => {
-        el.style.borderBottom = 'none';
-        el.contentEditable = false;
-    });
+  /* convertir teléfonos en enlaces tel reales */
+  const tel1=document.getElementById("tel1").innerText.trim().replace(/\s+/g,'');
+  const tel2=document.getElementById("tel2").innerText.trim().replace(/\s+/g,'');
 
-    const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
-    const blob = new Blob([htmlContent], { type: 'text/html' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'MI_FICHA_SOS.html';
-    a.click();
+  document.getElementById("btnCall1").setAttribute("href","tel:"+tel1);
+  document.getElementById("btnCall2").setAttribute("href","tel:"+tel2);
 
-    setTimeout(() => location.reload(), 500);
+  /* fijar selects */
+  const selects=document.querySelectorAll('select');
+  selects.forEach(s=>{
+    const val=s.value;
+    for(let opt of s.options){
+      if(opt.value===val) opt.setAttribute('selected','selected');
+      else opt.removeAttribute('selected');
+    }
+  });
+
+  /* bloquear edición */
+  const editables=document.querySelectorAll('[contenteditable="true"]');
+  editables.forEach(el=>{
+    el.style.borderBottom='none';
+    el.contentEditable=false;
+  });
+
+  /* generar html final */
+  const htmlContent="<!DOCTYPE html>\n"+document.documentElement.outerHTML;
+  const blob=new Blob([htmlContent],{type:'text/html'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='MI_FICHA_SOS.html';
+  a.click();
+
+  setTimeout(()=>location.reload(),500);
 }
 </script>
+
 </body>
 </html>
