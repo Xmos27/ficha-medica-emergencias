@@ -8,47 +8,18 @@
 <style>
 * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 
-body{
-font-family:'Segoe UI',Roboto,sans-serif;
-background:#f0f2f5;
-margin:0;
-padding:10px;
-}
+body{font-family:'Segoe UI',Roboto,sans-serif;background:#f0f2f5;margin:0;padding:10px;}
 
-/* TARJETA */
-.card{
-max-width:480px;
-margin:auto;
-background:white;
-border-radius:20px;
-box-shadow:0 10px 30px rgba(0,0,0,0.15);
-overflow:hidden;
-}
+.card{max-width:480px;margin:auto;background:white;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.15);overflow:hidden;}
 
-/* CABECERA */
 .header{
-background-image:url('https://i.postimg.cc/WzhjMCTL/Gemini-Generated-Image-diwf5hdiwf5hdiwf.png') !important;
-background-size:cover !important;
-background-position:center !important;
-height:260px;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-position:relative;
-color:white !important;
-text-align:center;
+background-image:url('https://i.postimg.cc/WzhjMCTL/Gemini-Generated-Image-diwf5hdiwf5hdiwf.png');
+background-size:cover;background-position:center;height:260px;
+display:flex;flex-direction:column;align-items:center;justify-content:center;
+position:relative;color:white;text-align:center;
 }
+.header::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,0.45);z-index:1;}
 
-.header::after{
-content:"";
-position:absolute;
-inset:0;
-background:rgba(0,0,0,0.45);
-z-index:1;
-}
-
-/* FOTO */
 .photo-container{
 width:140px;height:140px;border:4px solid white;border-radius:50%;
 overflow:hidden;z-index:2;cursor:pointer;background:#fff;
@@ -62,35 +33,35 @@ display:flex;align-items:center;justify-content:center;
 background:white;padding:20px;border-radius:20px;box-shadow:0 10px 40px rgba(0,0,0,0.3);
 z-index:1000;width:280px;text-align:center;}
 
+.photo-menu button{
+width:100%;padding:15px;margin:8px 0;border:none;border-radius:12px;
+font-weight:bold;cursor:pointer;font-size:15px;
+}
+.btn-camera{background:#004080;color:white;}
+.btn-gallery{background:#f0f2f5;color:#333;}
+.btn-cancel{background:transparent;color:#d90429;}
+
+#file-input-gallery,#file-input-camera{display:none;}
+
 .user-identity{z-index:2;margin-top:10px;text-shadow:0 2px 4px rgba(0,0,0,0.8);}
 .name{font-size:24px;font-weight:800;text-transform:uppercase;margin:0;}
 .age-row{font-size:16px;margin-top:5px;font-weight:bold;}
 
-.alerts-row{
-display:grid;grid-template-columns:1fr 1fr;
-background:#d90429 !important;color:white !important;padding:12px;text-align:center;
-}
+.alerts-row{display:grid;grid-template-columns:1fr 1fr;background:#d90429;color:white;padding:12px;text-align:center;}
 
-.blood-select {
+.blood-select{
 background:transparent;color:white;border:none;font-size:18px;
 font-weight:900;text-align:center;outline:none;cursor:pointer;
 }
-.blood-select option { color:black; }
+.blood-select option{color:black;}
 
 .content{padding:20px;}
 .section-title{font-weight:bold;color:#2b2d42;font-size:13px;margin:15px 0 8px;}
-.data-box{background:#f8f9fa !important;padding:12px;border-radius:12px;margin-bottom:10px;border:1px solid #dee2e6;}
+.data-box{background:#f8f9fa;padding:12px;border-radius:12px;margin-bottom:10px;border:1px solid #dee2e6;}
 .contact-row{display:flex;align-items:center;justify-content:space-between;gap:10px;}
 
-.btn-call{
-background:#28a745;color:white;padding:8px 12px;border-radius:8px;
-text-decoration:none;font-size:12px;font-weight:bold;cursor:pointer;
-}
-
-.btn-location,.btn-html,.btn-pdf{
-width:100%;color:white;padding:12px;border:none;border-radius:10px;
-font-weight:bold;cursor:pointer;margin-top:10px;
-}
+.btn-call{background:#28a745;color:white;padding:8px 12px;border-radius:8px;text-decoration:none;font-size:12px;font-weight:bold;cursor:pointer;}
+.btn-location,.btn-html,.btn-pdf{width:100%;color:white;padding:12px;border:none;border-radius:10px;font-weight:bold;cursor:pointer;margin-top:10px;}
 .btn-location{background:#004080;}
 .btn-html{background:#28a745;}
 .btn-pdf{background:#2b2d42;}
@@ -98,16 +69,31 @@ font-weight:bold;cursor:pointer;margin-top:10px;
 [contenteditable="true"]{border-bottom:1px dashed #bbb;outline:none;}
 
 @media print{
-.btn-pdf,.btn-location,.btn-call,.btn-html,.overlay,.photo-menu{display:none !important;}
+.btn-pdf,.btn-location,.btn-call,.btn-html,.overlay,.photo-menu,#file-input-gallery,#file-input-camera{display:none!important;}
 }
 </style>
 </head>
 
 <body>
 
+<div class="overlay" id="overlay" onclick="cerrarMenu()"></div>
+
+<div class="photo-menu" id="photoMenu">
+<h3>Foto de perfil</h3>
+<button class="btn-camera" onclick="document.getElementById('file-input-camera').click()">📸 HACER SELFIE</button>
+<button class="btn-gallery" onclick="document.getElementById('file-input-gallery').click()">🖼️ GALERÍA</button>
+<button class="btn-cancel" onclick="cerrarMenu()">CANCELAR</button>
+</div>
+
 <div class="card">
 <div class="header">
-<div class="photo-container"><img id="preview" src="https://via.placeholder.com/150?text=FOTO"></div>
+<div class="photo-container" onclick="mostrarMenu()">
+<img id="preview" src="https://via.placeholder.com/150?text=FOTO">
+</div>
+
+<input type="file" id="file-input-gallery" accept="image/*" onchange="previewImage(event)">
+<input type="file" id="file-input-camera" accept="image/*" capture="user" onchange="previewImage(event)">
+
 <div class="user-identity">
 <div class="name" contenteditable="true">NOMBRE Y APELLIDOS</div>
 <div class="age-row">Edad: <span contenteditable="true"></span> años</div>
@@ -134,37 +120,39 @@ font-weight:bold;cursor:pointer;margin-top:10px;
 <option>Ciclista carretera</option>
 <option>BTT</option>
 </select>
-<div><strong>Nº Federado:</strong> <span contenteditable="true"></span>Escribir aquí...</div>
+<div><strong>Nº Federado:</strong> <span contenteditable="true"></span></div>
 </div>
 
-<div class="section-title">📞 Contactos de Emergencia (ICE)</div>
+<div class="section-title">📞 Contactos ICE</div>
 
 <div class="data-box contact-row">
-<div><strong contenteditable="true">Nombre ICE1</strong><br>
-<span contenteditable="true" id="tel1">600000000</span></div>
+<div><strong contenteditable="true">Nombre ICE1</strong><br><span contenteditable="true" id="tel1">600000000</span></div>
 <a class="btn-call" id="btnCall1">LLAMAR</a>
 </div>
 
 <div class="data-box contact-row">
-<div><strong contenteditable="true">Nombre ICE2</strong><br>
-<span contenteditable="true" id="tel2">600000000</span></div>
+<div><strong contenteditable="true">Nombre ICE2</strong><br><span contenteditable="true" id="tel2">600000000</span></div>
 <a class="btn-call" id="btnCall2">LLAMAR</a>
 </div>
 
-<div class="section-title">🏥 Información Médica</div>
-<div class="data-box"><strong>PATOLOGÍAS</strong><div contenteditable="true">Escribir aquí...</div></div>
-<div class="data-box"><strong>MEDICACIÓN</strong><div contenteditable="true">Escribir aquí...</div></div>
-<div class="data-box"><strong>OBSERVACIONES</strong><div contenteditable="true">Escribir aquí...</div></div>
-
-<button class="btn-html" onclick="descargarFichaHTML()">💾 GUARDAR FICHA EN TU GOOGLE DRIVE</button>
-<button class="btn-pdf" onclick="window.print()">💾 GENERAR PDF</button>
-
+<button class="btn-html" onclick="descargarFichaHTML()">💾 GUARDAR FICHA PARA DRIVE</button>
 </div>
 </div>
 
 <script>
-function descargarFichaHTML() {
+function mostrarMenu(){overlay.style.display='block';photoMenu.style.display='block';}
+function cerrarMenu(){overlay.style.display='none';photoMenu.style.display='none';}
 
+function previewImage(event){
+const file=event.target.files[0];
+if(!file) return;
+const reader=new FileReader();
+reader.onload=e=>{preview.src=e.target.result;cerrarMenu();}
+reader.readAsDataURL(file);
+}
+
+/* FIX LLAMADAS PARA DRIVE */
+function descargarFichaHTML(){
 const tel1=document.getElementById("tel1").innerText.trim().replace(/\s+/g,'');
 const tel2=document.getElementById("tel2").innerText.trim().replace(/\s+/g,'');
 
@@ -181,10 +169,7 @@ else opt.removeAttribute('selected');
 });
 
 const editables=document.querySelectorAll('[contenteditable="true"]');
-editables.forEach(el=>{
-el.style.borderBottom='none';
-el.contentEditable=false;
-});
+editables.forEach(el=>{el.style.borderBottom='none';el.contentEditable=false;});
 
 const htmlContent="<!DOCTYPE html>\n"+document.documentElement.outerHTML;
 const blob=new Blob([htmlContent],{type:'text/html'});
@@ -192,7 +177,6 @@ const a=document.createElement('a');
 a.href=URL.createObjectURL(blob);
 a.download='MI_FICHA_SOS.html';
 a.click();
-
 setTimeout(()=>location.reload(),500);
 }
 </script>
